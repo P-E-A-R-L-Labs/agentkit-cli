@@ -63,39 +63,36 @@ program
     console.log("Happy hacking!");
   });
 
-function copyTemplateFiles(targetDir: string) {
-  // More reliable template path resolution
-  const templateDir = getTemplatePath();
-
-  console.log("Using template directory:", templateDir);
-
-  if (!fs.existsSync(templateDir)) {
-    throw new Error(`Template directory not found at ${templateDir}`);
-  }
-
-  fs.copySync(templateDir, targetDir);
-}
-
 function getTemplatePath(): string {
-  // Try multiple possible locations
+  // Try all possible locations
   const possiblePaths = [
     // For local development
-    path.join(__dirname, "../template"),
+    path.join(__dirname, '../template'),
     // For global install
-    path.join(__dirname, "../../template"),
+    path.join(__dirname, '../../template'),
     // For npx/npm install
-    path.join(process.cwd(), "node_modules/create-pearl-agent/template"),
-    // For some global installs
-    path.join(require.resolve("create-pearl-agent"), "../template"),
+    path.join(process.cwd(), 'node_modules/create-pearl-agent/template'),
+    // For global install (alternative)
+    path.dirname(require.resolve('create-pearl-agent')) + '/template'
   ];
 
   for (const possiblePath of possiblePaths) {
-    if (fs.existsSync(possiblePath)) {
-      return possiblePath;
+    try {
+      if (fs.existsSync(path.join(possiblePath, 'package.json'))) {
+        return possiblePath;
+      }
+    } catch (e) {
+      continue;
     }
   }
 
-  throw new Error("Could not locate template directory");
+  throw new Error(`Template directory not found. Tried: ${possiblePaths.join(', ')}`);
+}
+
+function copyTemplateFiles(targetDir: string) {
+  const templateDir = getTemplatePath();
+  console.log('Found template at:', templateDir);
+  fs.copySync(templateDir, targetDir);
 }
 
 function updatePackageJson(targetDir: string, projectName: string) {

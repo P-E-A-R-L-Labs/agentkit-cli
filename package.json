@@ -1,10 +1,10 @@
 {
   "name": "create-pearl-agent",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Create a new TypeScript project with AI service integrations",
   "main": "dist/cli.js",
   "bin": {
-    "create-pearl-agent": "bin/index.js"
+    "create-pearl-agent": "./bin/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -36,6 +36,7 @@
     "template/**/*",
     "dist/**/*",
     "dist",
-    "template"
+    "template",
+    "bin"
   ]
 }
