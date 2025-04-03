@@ -1,3 +1,6 @@
+console.log('Current __dirname:', __dirname);
+console.log('Template path attempt:', path.join(__dirname, '../template'));
+
 import fs from 'fs-extra';
 import path from 'path';
 import chalk from 'chalk';
@@ -54,7 +57,7 @@ program
   });
 
 function copyTemplateFiles(targetDir: string) {
-  const templateDir = path.join(__dirname, '../template');
+  const templateDir = path.join(process.cwd(), 'node_modules/create-pearl-agent/template');
   
   console.log(chalk.blue('Copying template files...'));
   
