@@ -1,0 +1,46 @@
+{
+  "name": "pearl-agentic-backend",
+  "version": "1.0.0",
+  "description": "P.E.A.R.L. AI Agents Backend Boilerplate",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts"
+  },
+  "keywords": [
+    "pearl",
+    "ai",
+    "agents",
+    "backend",
+    "boilerplate"
+  ],
+  "author": "P.E.A.R.L. Labs",
+  "license": "MIT",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.13.10",
+    "ts-node": "^10.9.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@langchain/anthropic": "^0.3.15",
+    "@langchain/core": "^0.3.42",
+    "@langchain/groq": "^0.2.0",
+    "@langchain/langgraph": "^0.2.56",
+    "@langchain/openai": "^0.4.5",
+    "axios": "^1.8.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "langchain": "^0.3.19",
+    "nodemon": "^3.1.9",
+    "openai": "^4.87.3",
+    "readline-sync": "^1.4.10",
+    "uuid": "^11.1.0"
+  }
+}
