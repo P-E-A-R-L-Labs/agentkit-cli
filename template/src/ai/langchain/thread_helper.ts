@@ -9,7 +9,9 @@ import { initializeLlamaModel, getLlamaResponse } from "../services/llamaService
 import { initializeMistralModel, getMistralResponse } from "../services/mistralService.ts";
 import { HumanMessage, AIMessage, SystemMessage } from "@langchain/core/messages";
 
-import { ToolManager, EXAMPLE_TOOLS } from "./toolconfig.ts";
+import { ToolManager, EXAMPLE_TOOLS } from "../../config/toolConfig.ts";
+
+import { createSendTransactionTool } from "../../tools/sendTransaction.ts";
 
 dotenv.config();
 
@@ -77,6 +79,23 @@ async function selectModel(): Promise<string> {
   }
 }
 
+function registerBlockchainTools(toolManager: ToolManager) {
+  const MONAD_PRIVATE_KEY = process.env.MONAD_PRIVATE_KEY;
+  
+  if (MONAD_PRIVATE_KEY) {
+    try {
+      toolManager.registerTool(createSendTransactionTool(MONAD_PRIVATE_KEY));
+      console.log('Blockchain transaction tool registered');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Failed to register blockchain tools:', errorMessage);
+      console.warn('Blockchain functionality will be disabled');
+    }
+  } else {
+    console.warn('MONAD_PRIVATE_KEY not set - blockchain tools disabled');
+  }
+}
+
 export async function chatThread() {
   const modelKey = await selectModel();
   const service = MODEL_SERVICES[modelKey];
@@ -91,6 +110,9 @@ export async function chatThread() {
   
   // Register example tools (in a real app, you might load these dynamically)
   EXAMPLE_TOOLS.forEach(tool => toolManager.registerTool(tool));
+
+  // Register blockchain tools if configured
+  registerBlockchainTools(toolManager);
 
   const model = service.initialize();
   const chatHistory = [
