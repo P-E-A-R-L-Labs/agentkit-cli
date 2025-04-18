@@ -1,4 +1,3 @@
-// networkConfig.ts
 // toolconfig.ts
 import { AIMessage } from "@langchain/core/messages";
 import { createViemPublicClient } from "./networkConfig.ts";

@@ -1,6 +1,6 @@
 {
   "name": "create-pearl-agent",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Create a new TypeScript project with AI service integrations",
   "main": "dist/cli.js",
   "bin": {

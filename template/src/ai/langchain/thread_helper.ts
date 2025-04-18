@@ -80,11 +80,11 @@ async function selectModel(): Promise<string> {
 }
 
 function registerBlockchainTools(toolManager: ToolManager) {
-  const MONAD_PRIVATE_KEY = process.env.MONAD_PRIVATE_KEY;
+  const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY;
   
-  if (MONAD_PRIVATE_KEY) {
+  if (WALLET_PRIVATE_KEY) {
     try {
-      toolManager.registerTool(createSendTransactionTool(MONAD_PRIVATE_KEY));
+      toolManager.registerTool(createSendTransactionTool(WALLET_PRIVATE_KEY));
       console.log('Blockchain transaction tool registered');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -92,7 +92,7 @@ function registerBlockchainTools(toolManager: ToolManager) {
       console.warn('Blockchain functionality will be disabled');
     }
   } else {
-    console.warn('MONAD_PRIVATE_KEY not set - blockchain tools disabled');
+    console.warn('WALLET_PRIVATE_KEY not set - blockchain tools disabled');
   }
 }
 
