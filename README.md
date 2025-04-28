@@ -1,5 +1,10 @@
 # agentkit-cli
 
+To install file system:
+```bash
+npx create-pearl-agent@latest <project_name>
+```
+
 To install dependencies:
 
 ```bash
